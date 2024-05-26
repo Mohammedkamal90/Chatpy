@@ -3,44 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Logout</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            background-image: url("../../../media/lout.jpg");
-            background-size: cover;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .logout-container {
-            text-align: center;
-            background-color: rgb(255, 255, 255);
-            padding: 50px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #ff6666;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #ff4d4d;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="logout-container">
-        <h1>Logout</h1>
-        <form method="post">
+<body class="bg-cover bg-center h-screen flex justify-center items-center" style="background-image: url('/media/lout.jpg');">
+    <div class="logout-container text-center bg-white p-12 rounded-lg shadow-lg">
+        <h1 class="text-2xl mb-6">Logout</h1>
+        <form method="post" class="space-y-6">
             {% csrf_token %}
-            <button type="submit">Confirm Logout</button>
+            <button type="submit" class="px-6 py-3 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75">Confirm Logout</button>
         </form>
     </div>
 </body>
