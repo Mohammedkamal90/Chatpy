@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .forms import SignUpForm
 
 def index(request):
     return render(request, 'chat/index.html')
@@ -29,11 +30,11 @@ def logout_view(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
             return redirect('index')
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
     return render(request, 'registration/register.html', {'form': form})

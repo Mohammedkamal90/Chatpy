@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'chat',
 ]
 
+WSGI_APPLICATION = 'chatpy.wsgi.application'
 ASGI_APPLICATION = 'chatpy.asgi.application'
 
 CHANNEL_LAYERS = {
