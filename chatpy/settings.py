@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'channels',
     'chat',
+    # 'groups',
+
 ]
 
 WSGI_APPLICATION = 'chatpy.wsgi.application'
