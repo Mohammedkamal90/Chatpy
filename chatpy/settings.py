@@ -28,6 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -52,7 +54,7 @@ CHANNEL_LAYERS = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-LOGIN_REDIRECT_URL = '/path/to/redirect/after/login/'
+LOGIN_REDIRECT_URL = '/groups/'
 LOGIN_URL = '/login/'
 LOGOUT_REDIRECT_URL = '/'
 
