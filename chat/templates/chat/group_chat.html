@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ group.name }} Chat</title>
+</head>
+<body>
+    <h1>{{ group.name }} Chat</h1>
+    <div id="chat-log">
+        <!-- Display messages here -->
+        {% for message in messages %}
+            <p>{{ message.content }}</p>
+        {% endfor %}
+    </div>
+    <input id="chat-message-input" type="text" size="100">
+    <input id="chat-message-submit" type="button" value="Send">
+    <!-- JavaScript for handling chat interactions -->
+</body>
+</html>

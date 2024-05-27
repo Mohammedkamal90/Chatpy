@@ -18,13 +18,13 @@
             <a href="{% url 'group_create' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Create New Group</a>
         </div>
             <div class="flex justify-center">
-        <ul class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md flex justify-center">
-            {% for group in groups %}
-                <li class="mb-4 border-b border-gray-200 pb-2">
-                    <a href="{% url 'group_update' group.pk %}" class="text-blue-700 hover:underline">{{ group.name }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+                <ul class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md flex flex-col items-center">
+                    {% for group in groups %}
+                        <li class="mb-4 border-b border-gray-200 pb-2">
+                            <a href="{% url 'group_chat' group.id %}" class="text-blue-700 hover:underline block text-2xl font-bold">{{ group.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
     </div>
 </body>

@@ -11,7 +11,7 @@ class Group(models.Model):
 class Room(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(default='Default description')
-
+    group = models.ForeignKey(Group, related_name='rooms', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
