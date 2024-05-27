@@ -18,4 +18,12 @@ class GroupForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = ['name', 'description']
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'block w-full p-2 border border-gray-300 rounded-md'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'block w-full p-2 border border-gray-300 rounded-md'
+            }),
+        }
 

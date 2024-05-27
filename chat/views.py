@@ -10,8 +10,13 @@ def index(request):
     return render(request, 'chat/index.html')
 
 @login_required
-def chat_view(request):
-    return render(request, 'chat/chat.html')
+def groups(request):
+    return render(request, 'chat/group_list.html')
+
+def groups(request):
+    groups = Group.objects.all()
+
+    return render(request, 'chat/group_list.html', {'groups': groups})
 
 def login_view(request):
     if request.method == 'POST':

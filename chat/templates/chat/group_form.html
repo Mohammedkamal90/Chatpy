@@ -4,14 +4,26 @@
     <title>Group Form</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
+<body class="bg-blue-100">
+    <a href="/" class="mt-0 ml-4 mb-10 block text-black font-bold text-2xl hover:text-gray-700">Chatpy</a>
+
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-bold mb-4">Create/Update Group</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Save</button>
+        <div class="flex justify-center mb-6">
+            <img src="../../../media/group.png" alt="Logo" class="w-24 h-24 object-contain">
+        </div>
+        
+        <h1 class="text-3xl font-bold mb-4 text-center">Create/Update Group</h1>
+
+        <form method="post" class="font-bold space-y-6 bg-gray-400 p-8 rounded shadow-md ">
+            <div class="space-y-4">
+                {% csrf_token %}
+                {{ form.as_p }}
+            </div>
+            <div class="flex justify-center">
+                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Save</button>
+            </div>
         </form>
     </div>
 </body>
 </html>
+
