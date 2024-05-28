@@ -10,29 +10,28 @@
             background-position: center;
         }
         #chat-log {
-            max-height: 300px; /* Adjust height as needed */
-            overflow-y: auto; /* Enable vertical scroll if content exceeds height */
+            max-height: 400px;
+            width: 900px;
+            overflow-y: auto;
+        }
+        .message-block {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body class="bg-gray-100">
     <a href="/" class="mt-0 ml-4 mb-10 text-white font-bold text-xl hover:text-gray-700">Chatpy</a>
 
-    <div class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold mb-4 flex justify-center hover:text-white">{{ group.name }} Chat</h1>
-        <div id="chat-log" class="bg-white p-4 rounded-lg shadow-lg overflow-y-auto">
-            <!-- Display messages here -->
-            {% for message in messages %}
-                <div class="mb-2 block text-center">
-                    <p><strong>{{ message.user.username }}</strong></p>
-                    <p>{{ message.content|truncatechars:50 }}</p>
-                </div>
-            {% endfor %}
-        </div>
-        <input id="chat-message-input" type="text" size="50" class="mt-4 px-4 py-2 rounded border border-gray-300 mx-auto w-1/2 block">
-        <input id="chat-message-submit" type="button" value="Send" class="mt-2 px-4 py-2 bg-white font-bold text-blue-600 rounded shadow hover:bg-blue-100 block mx-auto ">
+    <div class="container mx-auto px-4 py-8 flex flex-col items-center">
+        <h1 class="text-3xl font-bold mb-4 text-center text-white hover:text-gray-700">{{ group.name }} Chat</h1>
+        <div id="chat-log" class="bg-white p-4 rounded-lg shadow-lg overflow-y-auto mb-4"></div>
+        <input id="chat-message-input" type="text" size="50" class="px-4 py-2 rounded border border-gray-300 w-full max-w-md mb-2">
+        <input id="chat-message-submit" type="button" value="Send" class="px-4 py-2 bg-blue-600 font-bold text-white rounded shadow hover:bg-blue-700">
     </div>
-    
     
     <script>
         // Get DOM elements
@@ -43,21 +42,54 @@
         // Assume we have the current user's username
         const currentUsername = '{{ user.username }}'; 
     
+        // Function to format time
+        function formatTime(date) {
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+            const ampm = hours >= 12 ? 'pm' : 'am';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            const strTime = hours + ':' + minutes + ' ' + ampm;
+            return strTime;
+        }
+    
         // Function to send a message
         function sendMessage() {
             const message = messageInput.value.trim();
             if (message !== '') {
-                // Create elements for username and message
+                // Create elements for username, message, and timestamp
+                const messageBlock = document.createElement('div');
+                messageBlock.classList.add('message-block');
+    
                 const usernameElement = document.createElement('p');
                 usernameElement.textContent = currentUsername;
                 usernameElement.style.fontWeight = 'bold';
     
+                const messageContainer = document.createElement('div');
+                messageContainer.style.display = 'flex';
+                messageContainer.style.justifyContent = 'space-between';
+                messageContainer.style.alignItems = 'center';
+                messageContainer.style.marginBottom = '10px';
+    
                 const messageElement = document.createElement('p');
                 messageElement.textContent = message;
     
-                // Append username and message to chat log
-                chatLog.appendChild(usernameElement);
-                chatLog.appendChild(messageElement);
+                const timestampElement = document.createElement('p');
+                timestampElement.textContent = formatTime(new Date());
+                timestampElement.style.fontSize = '0.8em';
+                timestampElement.style.color = 'gray';
+    
+                // Append message and timestamp to the message container
+                messageContainer.appendChild(messageElement);
+                messageContainer.appendChild(timestampElement);
+    
+                // Append username and message container to the message block
+                messageBlock.appendChild(usernameElement);
+                messageBlock.appendChild(messageContainer);
+    
+                // Append message block to chat log
+                chatLog.appendChild(messageBlock);
     
                 // Clear message input
                 messageInput.value = '';
@@ -77,6 +109,5 @@
             }
         });
     </script>
-            
 </body>
 </html>
