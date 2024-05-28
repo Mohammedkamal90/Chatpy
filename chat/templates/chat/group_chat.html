@@ -2,17 +2,67 @@
 <html>
 <head>
     <title>{{ group.name }} Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('../../../media/colorful-3d-background_23-2148484152.avif');
+            background-size: cover;
+            background-position: center;
+        }
+        #chat-log {
+            max-height: 300px; /* Adjust height as needed */
+            overflow-y: auto; /* Enable vertical scroll if content exceeds height */
+        }
+    </style>
 </head>
-<body>
-    <h1>{{ group.name }} Chat</h1>
-    <div id="chat-log">
-        <!-- Display messages here -->
-        {% for message in messages %}
-            <p>{{ message.content }}</p>
-        {% endfor %}
+<body class="bg-gray-100">
+    <a href="/" class="mt-0 ml-4 mb-10 text-white font-bold text-xl hover:text-gray-700">Chatpy</a>
+
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-4 flex justify-center hover:text-white">{{ group.name }} Chat</h1>
+        <div id="chat-log" class="bg-white p-4 rounded-lg shadow-lg overflow-y-auto">
+            <!-- Display messages here -->
+            {% for message in messages %}
+                <p class="mb-2 block text-center">{{ message.content|truncatechars:50 }}</p>
+            {% endfor %}
+        </div>
+        <input id="chat-message-input" type="text" size="50" class="mt-4 px-4 py-2 rounded border border-gray-300 mx-auto w-1/2 block">
+        <input id="chat-message-submit" type="button" value="Send" class="mt-2 px-4 py-2 bg-white font-bold text-blue-600 rounded shadow hover:bg-blue-100 block mx-auto ">
     </div>
-    <input id="chat-message-input" type="text" size="100">
-    <input id="chat-message-submit" type="button" value="Send">
-    <!-- JavaScript for handling chat interactions -->
+    
+        <script>
+            // Get DOM elements
+            const messageInput = document.getElementById('chat-message-input');
+            const messageSubmit = document.getElementById('chat-message-submit');
+            const chatLog = document.getElementById('chat-log');
+        
+            // Function to send a message
+            function sendMessage() {
+                const message = messageInput.value.trim();
+                if (message !== '') {
+                    // Append message to chat log
+                    const messageElement = document.createElement('p');
+                    messageElement.textContent = message;
+                    chatLog.appendChild(messageElement);
+                    
+                    // Clear message input
+                    messageInput.value = '';
+                    
+                    chatLog.scrollTop = chatLog.scrollHeight;
+                }
+            }
+        
+            messageSubmit.addEventListener('click', () => {
+                sendMessage();
+            });
+        
+            messageInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        </script>
+        
+    </div>
 </body>
 </html>
