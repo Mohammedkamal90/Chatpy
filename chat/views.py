@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm, GroupForm
-from .models import Group
+from .models import Group, Message
 
 def index(request):
     return render(request, 'chat/index.html')
@@ -73,3 +73,11 @@ def group_chat(request, group_id):
     group = get_object_or_404(Group, pk=group_id)
     rooms = group.rooms.all()
     return render(request, 'chat/group_chat.html', {'group': group, 'rooms': rooms})
+
+def send_message(user, content):
+    message = Message.objects.create(user=user, content=content)
+    return message
+
+def get_messages():
+    messages = Message.objects.all()
+    return messages

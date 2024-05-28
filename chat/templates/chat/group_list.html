@@ -4,12 +4,12 @@
     <title>Group List</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-300"  >
     <a href="/" class="mt-0 ml-4 mb-10 block text-black font-bold text-2xl hover:text-gray-700">Chatpy</a>
 
     <div class="container mx-auto px-4 py-8">
         <div class="flex justify-center mb-6">
-            <img src="../../../media/grouplist.jpeg" alt="Logo" class="w-24 h-24 object-contain">
+            <img src="../../../media/people-circle-connection-group-logo-vector.jpg" alt="Logo" class="w-24 h-24 object-contain rounded-lg shadow-lg border border-gray-400">
         </div>
         
         <h1 class="text-2xl font-bold mb-4 text-center">Groups</h1>
@@ -18,11 +18,13 @@
             <a href="{% url 'group_create' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Create New Group</a>
         </div>
             <div class="flex justify-center">
-                <ul class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md flex flex-col items-center">
+                <ul class="bg-white-200 p-6 rounded-lg shadow-lg w-full max-w-md flex flex-col items-center">
                     {% for group in groups %}
                         <li class="mb-4 border-b border-gray-200 pb-2">
-                            <a href="{% url 'group_chat' group.id %}" class="text-blue-700 hover:underline block text-2xl font-bold">{{ group.name }}</a>
-                        </li>
+                            <a href="{% url 'group_chat' group.id %}" class="text-blue-700 hover:underline block text-2xl font-bold transform transition-transform duration-300 hover:scale-105">
+                                {{ group.name }}
+                            </a>
+                                                    </li>
                     {% endfor %}
                 </ul>
             </div>
