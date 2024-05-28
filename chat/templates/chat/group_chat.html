@@ -23,12 +23,16 @@
         <div id="chat-log" class="bg-white p-4 rounded-lg shadow-lg overflow-y-auto">
             <!-- Display messages here -->
             {% for message in messages %}
-                <p class="mb-2 block text-center">{{ message.content|truncatechars:50 }}</p>
+                <div class="mb-2 block text-center">
+                    <p><strong>{{ message.user.username }}</strong></p>
+                    <p>{{ message.content|truncatechars:50 }}</p>
+                </div>
             {% endfor %}
         </div>
         <input id="chat-message-input" type="text" size="50" class="mt-4 px-4 py-2 rounded border border-gray-300 mx-auto w-1/2 block">
         <input id="chat-message-submit" type="button" value="Send" class="mt-2 px-4 py-2 bg-white font-bold text-blue-600 rounded shadow hover:bg-blue-100 block mx-auto ">
     </div>
+    
     
         <script>
             // Get DOM elements
