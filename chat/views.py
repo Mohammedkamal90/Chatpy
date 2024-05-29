@@ -2,11 +2,13 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages  # Import messages framework
 from .forms import SignUpForm, GroupForm
 from .models import Group, Message
 
 def index(request):
-    return render(request, 'chat/index.html')
+    welcome_message = f"Hi {request.user.username}," if request.user.is_authenticated else None
+    return render(request, 'chat/index.html', {'welcome_message': welcome_message})
 
 @login_required
 def groups(request):
