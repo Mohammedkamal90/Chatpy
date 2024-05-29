@@ -1,5 +1,3 @@
-# chat/tests.py
-
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -27,9 +25,8 @@ class UserAccountTests(TestCase):
             'password1': 'testpassword123',
             'password2': 'testpassword123'
         })
-        self.assertEqual(response.status_code, 302)  # Expecting a redirect
-        self.assertRedirects(response, reverse('index'))  # Should redirect to 'index' after registration
+        self.assertEqual(response.status_code, 302)  
+        self.assertRedirects(response, reverse('index'))  
 
-        # Check that the user is actually created
-        user = User.objects.get(username='newuser')
+        user = User.objects.filter(username='newuser').first()
         self.assertIsNotNone(user)
