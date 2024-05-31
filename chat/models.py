@@ -9,24 +9,18 @@ class Group(models.Model):
     def __str__(self):
         return self.name
 
-class Room(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(default='Default description')
-    group = models.ForeignKey(Group, related_name='rooms', on_delete=models.SET_NULL, null=True, default=None)
-
-    def __str__(self):
-        return self.name
-
-    def __str__(self):
-        return self.name
-
 class Message(models.Model):
-    room = models.ForeignKey(Room, related_name='messages', on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, related_name='messages', on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, related_name='messages', on_delete=models.CASCADE, default=1)
     content = models.TextField()
-    timestamp = models.DateTimeField(default=timezone.now)
-
-    def __str__(self):
-        return f'{self.user.username}: {self.content[:50]}'
+    timestamp = models.DateTimeField(auto_now_add=True)
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Set a default group if not provided
+        if not self.group_id:
+            default_group = Group.objects.first()
+            self.group = default_group
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -28,86 +28,26 @@
 
     <div class="container mx-auto px-4 py-8 flex flex-col items-center">
         <h1 class="text-3xl font-bold mb-4 text-center text-white hover:text-gray-700">{{ group.name }} Chat</h1>
-        <div id="chat-log" class="message bg-white p-4 rounded-lg shadow-lg overflow-y-auto mb-4"></div>
+        <div id="chat-log" class="message bg-white p-4 rounded-lg shadow-lg overflow-y-auto mb-4">
+            {% for message in messages %}
+                <div class="message-block">
+                    <p style="font-weight: bold;">{{ message.user.username }}</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <p>{{ message.content }}</p>
+                        <p style="font-size: 0.8em; color: gray;">{{ message.timestamp|date:"H:i" }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
         <input id="chat-message-input" type="text" size="50" class="px-4 py-2 rounded border border-gray-300 w-full max-w-md mb-2">
         <input id="chat-message-submit" type="button" value="Send" class="px-4 py-2 bg-blue-600 font-bold text-white rounded shadow hover:bg-blue-700">
     </div>
-    
+
     <script>
-        // Get DOM elements
-        const messageInput = document.getElementById('chat-message-input');
-        const messageSubmit = document.getElementById('chat-message-submit');
-        const chatLog = document.getElementById('chat-log');
-    
-        // Assume we have the current user's username
-        const currentUsername = '{{ user.username }}'; 
-    
-        // Function to format time
-        function formatTime(date) {
-            let hours = date.getHours();
-            let minutes = date.getMinutes();
-            const ampm = hours >= 12 ? 'pm' : 'am';
-            hours = hours % 12;
-            hours = hours ? hours : 12; // the hour '0' should be '12'
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            const strTime = hours + ':' + minutes + ' ' + ampm;
-            return strTime;
-        }
-    
-        // Function to send a message
-        function sendMessage() {
-            const message = messageInput.value.trim();
-            if (message !== '') {
-                // Create elements for username, message, and timestamp
-                const messageBlock = document.createElement('div');
-                messageBlock.classList.add('message-block');
-    
-                const usernameElement = document.createElement('p');
-                usernameElement.textContent = currentUsername;
-                usernameElement.style.fontWeight = 'bold';
-    
-                const messageContainer = document.createElement('div');
-                messageContainer.style.display = 'flex';
-                messageContainer.style.justifyContent = 'space-between';
-                messageContainer.style.alignItems = 'center';
-                messageContainer.style.marginBottom = '10px';
-    
-                const messageElement = document.createElement('p');
-                messageElement.textContent = message;
-    
-                const timestampElement = document.createElement('p');
-                timestampElement.textContent = formatTime(new Date());
-                timestampElement.style.fontSize = '0.8em';
-                timestampElement.style.color = 'gray';
-    
-                // Append message and timestamp to the message container
-                messageContainer.appendChild(messageElement);
-                messageContainer.appendChild(timestampElement);
-    
-                // Append username and message container to the message block
-                messageBlock.appendChild(usernameElement);
-                messageBlock.appendChild(messageContainer);
-    
-                // Append message block to chat log
-                chatLog.appendChild(messageBlock);
-    
-                // Clear message input
-                messageInput.value = '';
-    
-                // Scroll to the bottom of the chat log
-                chatLog.scrollTop = chatLog.scrollHeight;
-            }
-        }
-    
-        messageSubmit.addEventListener('click', () => {
-            sendMessage();
-        });
-    
-        messageInput.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
-        });
+        const currentUsername = "{{ user.username }}";
+        const groupId = "{{ group.id }}";
     </script>
+
+<script src="../../static/chat/js/group_chat.js"></script>
 </body>
 </html>

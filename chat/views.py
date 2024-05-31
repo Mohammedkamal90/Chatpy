@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib import messages  # Import messages framework
+from django.contrib import messages  
 from .forms import SignUpForm, GroupForm
 from .models import Group, Message
 
@@ -72,9 +72,9 @@ def group_update(request, pk):
     return render(request, 'chat/group_form.html', {'form': form})
 
 def group_chat(request, group_id):
-    group = get_object_or_404(Group, pk=group_id)
-    rooms = group.rooms.all()
-    return render(request, 'chat/group_chat.html', {'group': group, 'rooms': rooms})
+    group = get_object_or_404(Group, id=group_id)
+    messages = group.messages.all().order_by('timestamp')
+    return render(request, 'chat/group_chat.html', {'group': group, 'messages': messages})
 
 def send_message(user, content):
     message = Message.objects.create(user=user, content=content)

@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
+from .models import Message, Group
 
 class MainPagesTestCase(TestCase):
     def test_home_page(self):
@@ -30,3 +31,14 @@ class UserAccountTests(TestCase):
 
         user = User.objects.filter(username='newuser').first()
         self.assertIsNotNone(user)
+
+class MessageTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='12345')
+        self.group = Group.objects.create(name='Test Group')
+
+    def test_message_creation(self):
+        message = Message.objects.create(content='Test Message', user=self.user, group=self.group)
+        self.assertEqual(message.content, 'Test Message')
+        self.assertEqual(message.user.username, 'testuser')
+        self.assertEqual(message.group.name, 'Test Group')
